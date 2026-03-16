@@ -2,18 +2,22 @@
   display: flex;
   flex-direction: row;
   flex: 1;
+  min-height: 100%;
 }
 
 .sidebar {
-  width: 250px;
-  background-color: #2c2c2c;
-  color: white;
-  padding: 16px;
+  width: 220px;
+  flex-shrink: 0;
+  background-color: rgba(219, 234, 254, 0.5);
+  backdrop-filter: blur(4px);
+  border-right: 1px solid #bfdbfe;
+  padding: 20px 12px;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #ddd;
+  align-self: stretch;
 }
 
 .notesWrapper {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
 }

@@ -5,8 +5,9 @@ import Link from "next/link";
 export default function Header() {
   return (
     <header className={css.header}>
-      <Link href="/" aria-label="Home">
-        NoteHub
+      <Link href="/" aria-label="Home" className={css.logo}>
+        <span className={css.logoNote}>Note</span>
+        <span className={css.logoHub}>Hub</span>
       </Link>
       <nav aria-label="Main Navigation">
         <ul className={css.navigation}>

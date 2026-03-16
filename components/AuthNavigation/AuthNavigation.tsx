@@ -42,7 +42,7 @@ const AuthNavigation = () => {
       </li>
 
       <li className={css.navigationItem}>
-        <Link href="/sign-up" prefetch={false} className={css.navigationLink}>
+        <Link href="/sign-up" prefetch={false} className={css.signUpLink}>
           Sign up
         </Link>
       </li>

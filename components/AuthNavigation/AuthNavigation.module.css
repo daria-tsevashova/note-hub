@@ -1,23 +1,28 @@
 .userEmail {
-  color: white;
-  margin-right: 0.5rem;
-  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0 0.5rem 0 0;
+  font-size: 0.875rem;
 }
 
 .logoutButton {
   background: transparent;
-  border: 1px solid white;
-  color: white;
-  padding: 0.3rem 0.6rem;
-  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  color: #374151;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .logoutButton:hover {
-  background-color: white;
-  color: #333;
+  background-color: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
 }
 
 .navigationItem {
@@ -27,10 +32,33 @@
 
 .navigationLink {
   text-decoration: none;
-  color: white;
-  font-size: 1rem;
+  color: #374151;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .navigationLink:hover {
-  color: #ddd;
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.signUpLink {
+  background-color: #2563eb;
+  color: #ffffff !important;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.signUpLink:hover {
+  background-color: #1d4ed8;
+  color: #ffffff !important;
 }
