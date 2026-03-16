@@ -1,6 +1,9 @@
-import axios from 'axios';
+import axios from "axios";
+
+const backendBaseURL =
+  process.env.NOTEHUB_API_URL ?? "https://notehub-63w5.onrender.com";
 
 export const api = axios.create({
-  baseURL: 'https://notehub-api.goit.study',
+  baseURL: backendBaseURL,
   withCredentials: true,
 });

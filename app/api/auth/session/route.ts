@@ -4,18 +4,43 @@ import { api } from "../../api";
 import { parse } from "cookie";
 import { isAxiosError } from "axios";
 import { logErrorResponse } from "../../_utils/utils";
+import { User } from "@/types/user";
+
+async function getCurrentUser(cookieHeader: string): Promise<User | null> {
+  try {
+    const meRes = await api.get<User>("users/me", {
+      headers: {
+        Cookie: cookieHeader,
+      },
+    });
+    return meRes.data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response?.status === 401) {
+      return null;
+    }
+    throw error;
+  }
+}
 
 export async function GET() {
   try {
     const cookieStore = await cookies();
+    const sessionId = cookieStore.get("sessionId")?.value;
     const accessToken = cookieStore.get("accessToken")?.value;
     const refreshToken = cookieStore.get("refreshToken")?.value;
 
-    if (accessToken) {
-      return NextResponse.json({ success: true });
+    if (!sessionId && !accessToken && !refreshToken) {
+      return NextResponse.json(null, { status: 200 });
     }
 
-    if (refreshToken) {
+    if (accessToken) {
+      const user = await getCurrentUser(cookieStore.toString());
+      if (user) {
+        return NextResponse.json(user, { status: 200 });
+      }
+    }
+
+    if (refreshToken || sessionId) {
       const apiRes = await api.get("auth/session", {
         headers: {
           Cookie: cookieStore.toString(),
@@ -35,21 +60,28 @@ export async function GET() {
             maxAge: Number(parsed["Max-Age"]),
           };
 
+          if (parsed.sessionId)
+            cookieStore.set("sessionId", parsed.sessionId, options);
           if (parsed.accessToken)
             cookieStore.set("accessToken", parsed.accessToken, options);
           if (parsed.refreshToken)
             cookieStore.set("refreshToken", parsed.refreshToken, options);
         }
-        return NextResponse.json({ success: true }, { status: 200 });
+
+        const user = await getCurrentUser(cookieStore.toString());
+        if (user) {
+          return NextResponse.json(user, { status: 200 });
+        }
       }
     }
-    return NextResponse.json({ success: false }, { status: 200 });
+
+    return NextResponse.json(null, { status: 200 });
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
-      return NextResponse.json({ success: false }, { status: 200 });
+      return NextResponse.json(null, { status: 200 });
     }
     logErrorResponse({ message: (error as Error).message });
-    return NextResponse.json({ success: false }, { status: 200 });
+    return NextResponse.json(null, { status: 200 });
   }
 }

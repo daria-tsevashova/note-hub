@@ -9,18 +9,19 @@ const privateRoutes = ["/profile", "/notes", "/notes/filter"];
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const cookieStore = await cookies();
+  const sessionId = cookieStore.get("sessionId")?.value;
   const accessToken = cookieStore.get("accessToken")?.value;
   const refreshToken = cookieStore.get("refreshToken")?.value;
 
   const isPublicRoute = publicRoutes.some((route) =>
-    pathname.startsWith(route)
+    pathname.startsWith(route),
   );
   const isPrivateRoute = privateRoutes.some((route) =>
-    pathname.startsWith(route)
+    pathname.startsWith(route),
   );
 
   if (!accessToken) {
-    if (refreshToken) {
+    if (refreshToken || sessionId) {
       const cookieString = cookieStore
         .getAll()
         .map((c) => `${c.name}=${c.value}`)
@@ -37,6 +38,8 @@ export async function proxy(request: NextRequest) {
             path: parsed.Path,
             maxAge: Number(parsed["Max-Age"]),
           };
+          if (parsed.sessionId)
+            cookieStore.set("sessionId", parsed.sessionId, options);
           if (parsed.accessToken)
             cookieStore.set("accessToken", parsed.accessToken, options);
           if (parsed.refreshToken)
