@@ -3,15 +3,23 @@
   flex-direction: row;
   flex: 1;
   min-height: 100%;
+  background: linear-gradient(
+    180deg,
+    var(--surface-soft) 0%,
+    var(--bg-main) 45%
+  );
 }
 
 .sidebar {
   width: 220px;
   flex-shrink: 0;
-  background-color: rgba(219, 234, 254, 0.5);
-  backdrop-filter: blur(4px);
-  border-right: 1px solid #bfdbfe;
-  padding: 20px 12px;
+  background: linear-gradient(
+    180deg,
+    rgba(239, 246, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.95) 100%
+  );
+  border-right: 1px solid var(--border);
+  padding: 22px 14px;
   display: flex;
   flex-direction: column;
   align-self: stretch;

@@ -4,21 +4,24 @@ import css from "./SidebarNotes.module.css";
 
 export function SidebarNotes() {
   return (
-    <ul className={css.menuList}>
-      {/* <Link href="/notes/action/create">Create note</Link> */}
-      <li className={css.menuItem}>
-        <Link href={`/notes/filter/all`} className={css.menuLink}>
-          All notes{" "}
-        </Link>{" "}
-      </li>
-      {tags.map((tag) => (
-        <li key={tag} className={css.menuItem}>
-          <Link href={`/notes/filter/${tag}`} className={css.menuLink}>
-            {tag}
+    <div className={css.sidebarPanel}>
+      <p className={css.sidebarTitle}>Filters</p>
+
+      <ul className={css.menuList}>
+        <li className={css.menuItem}>
+          <Link href={`/notes/filter/all`} className={css.menuLink}>
+            All notes
           </Link>
         </li>
-      ))}
-    </ul>
+        {tags.map((tag) => (
+          <li key={tag} className={css.menuItem}>
+            <Link href={`/notes/filter/${tag}`} className={css.menuLink}>
+              {tag}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

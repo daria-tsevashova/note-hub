@@ -1,68 +1,142 @@
 .mainContent {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(96, 165, 250, 0.18),
+      transparent 28%
+    ),
+    linear-gradient(180deg, var(--surface-soft) 0%, var(--bg-main) 100%);
+}
+
+.formCard {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: min(100%, 460px);
+  padding: 30px 26px;
+  background: var(--surface-glass);
+  border: 1px solid var(--border-strong);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.formTitle {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.formSubtitle {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.7;
 }
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 24px;
-  background-color: #fff;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.formTitle {
-  font-size: 24px;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 8px;
-  color: #212529;
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
-  font-size: 14px;
-  font-weight: 500;
-  color: #212529;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 .input {
-  margin-top: 4px;
-  padding: 8px 12px;
-  font-size: 14px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
+  margin-top: 6px;
+  padding: 11px 12px;
+  font-size: 0.92rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text-primary);
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.16);
 }
 
 .actions {
   display: flex;
-  justify-content: flex-end;
-  gap: 8px;
+  justify-content: stretch;
 }
 
 .submitButton {
-  padding: 8px 16px;
-  font-size: 16px;
-  background-color: #0d6efd;
+  width: 100%;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background-color: var(--accent);
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 999px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .submitButton:hover {
-  background-color: #0b5ed7;
+  background-color: var(--accent-hover);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
 }
 
 .error {
-  color: #dc3545;
-  font-size: 12px;
-  margin-top: 4px;
+  color: var(--danger-hover);
+  font-size: 0.84rem;
+  margin: 0;
+  min-height: 1.1rem;
+}
+
+.switchText {
+  margin: 2px 0 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
   text-align: center;
+}
+
+.switchLink {
+  margin-left: 6px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.switchLink:hover {
+  color: var(--accent-hover);
+}
+
+@media (max-width: 560px) {
+  .formCard {
+    padding: 24px 18px;
+    border-radius: 18px;
+  }
 }

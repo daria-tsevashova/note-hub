@@ -3,9 +3,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
 }
 
 .logo {
@@ -17,11 +17,11 @@
 }
 
 .logoNote {
-  color: #111827;
+  color: var(--text-primary);
 }
 
 .logoHub {
-  color: #2563eb;
+  color: var(--accent);
 }
 
 .navigation {
@@ -35,7 +35,7 @@
 
 .navigation li a {
   text-decoration: none;
-  color: #374151;
+  color: var(--text-secondary);
   font-size: 0.95rem;
   font-weight: 500;
   padding: 0.4rem 0.75rem;
@@ -46,6 +46,6 @@
 }
 
 .navigation li a:hover {
-  background-color: #f3f4f6;
-  color: #111827;
+  background-color: var(--surface-soft);
+  color: var(--text-primary);
 }

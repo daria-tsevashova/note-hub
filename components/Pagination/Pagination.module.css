@@ -1,11 +1,12 @@
 .pagination {
   display: flex;
   justify-content: center;
-  gap: 4px;
+  gap: 6px;
   margin: 16px 0;
   list-style: none;
   padding: 0;
   margin: 0;
+  align-items: center;
 }
 
 .pagination li {
@@ -14,6 +15,9 @@
   cursor: pointer;
   min-width: 36px;
   height: 36px;
+  flex: 0 0 auto;
+  background-color: rgba(255, 255, 255, 0.85);
+  color: #1d4ed8;
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
@@ -26,12 +30,17 @@
   width: 100%;
   height: 100%;
   text-decoration: none;
-  color: #0d6efd;
+  color: #1d4ed8 !important;
+  font-weight: 600;
   font-size: 14px;
 }
 
 .pagination li:hover {
-  background-color: #e9ecef;
+  background-color: #eff6ff;
+}
+
+.pagination li:hover a {
+  color: #1d4ed8 !important;
 }
 
 .pagination li.active:hover {

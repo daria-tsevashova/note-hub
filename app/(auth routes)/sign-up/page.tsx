@@ -5,6 +5,8 @@ import useAuthStore from "@/lib/store/authStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import css from "./SignUpPage.module.css";
+import Link from "next/link";
+import { getAuthErrorMessage } from "@/lib/api/authErrorMessage";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -25,8 +27,7 @@ export default function SignUpPage() {
       setUser(user);
       router.push("/profile");
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : String(err);
-      setError(message || "Registration failed");
+      setError(getAuthErrorMessage(err, "register"));
     }
   };
 
@@ -36,44 +37,59 @@ export default function SignUpPage() {
       .querySelector('meta[name="description"]')
       ?.setAttribute(
         "content",
-        `Create a new account on NoteHub. Sign up with your email and password to get started.`
+        `Create a new account on NoteHub. Sign up with your email and password to get started.`,
       );
   }, []);
 
   return (
     <main className={css.mainContent}>
-      <h1 className={css.formTitle}>Sign up</h1>
-      <form className={css.form} onSubmit={handleSubmit}>
-        <div className={css.formGroup}>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            className={css.input}
-            required
-          />
-        </div>
+      <div className={css.formCard}>
+        <p className={css.eyebrow}>Create account</p>
+        <h1 className={css.formTitle}>Join NoteHub</h1>
+        <p className={css.formSubtitle}>
+          Set up your account to save ideas, manage notes by tags, and access
+          everything from one elegant space.
+        </p>
 
-        <div className={css.formGroup}>
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            className={css.input}
-            required
-          />
-        </div>
+        <form className={css.form} onSubmit={handleSubmit}>
+          <div className={css.formGroup}>
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              className={css.input}
+              required
+            />
+          </div>
 
-        <div className={css.actions}>
-          <button type="submit" className={css.submitButton}>
-            Register
-          </button>
-        </div>
+          <div className={css.formGroup}>
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              className={css.input}
+              required
+            />
+          </div>
 
-        <p className={css.error}>{error}</p>
-      </form>
+          <div className={css.actions}>
+            <button type="submit" className={css.submitButton}>
+              Register
+            </button>
+          </div>
+
+          <p className={css.error}>{error}</p>
+        </form>
+
+        <p className={css.switchText}>
+          Already have an account?
+          <Link href="/sign-in" className={css.switchLink}>
+            Sign in
+          </Link>
+        </p>
+      </div>
     </main>
   );
 }

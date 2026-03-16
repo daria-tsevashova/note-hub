@@ -1,3 +1,21 @@
+.sidebarPanel {
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.sidebarTitle {
+  margin: 0 0 12px;
+  padding: 0 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
 .menuList {
   list-style-type: none;
   margin: 0;
@@ -10,18 +28,21 @@
 
 .menuLink {
   text-decoration: none;
-  color: #1e40af;
-  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
   font-weight: 500;
   display: block;
-  padding: 8px 14px;
-  border-radius: 6px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;
   transition:
     background-color 0.2s ease,
-    color 0.2s ease;
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .menuLink:hover {
-  background-color: #bfdbfe;
-  color: #1e3a8a;
+  background-color: var(--surface-soft);
+  border-color: var(--border-strong);
+  color: var(--accent);
 }

@@ -44,24 +44,39 @@ const NotesClient = ({ tag }: NotesClientProps) => {
       <Toaster position="top-right" />
 
       <header className={css.toolbar}>
-        <SearchBox onChange={onChange} value={query} />
+        <div className={css.toolbarTop}>
+          <SearchBox onChange={onChange} value={query} />
 
-        {isSuccess && data && data.notes.length > 0 && (
-          <Pagination
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            totalPages={data.totalPages}
-          />
-        )}
+          {isSuccess && data && data.notes.length > 0 && (
+            <div className={css.paginationWrap}>
+              <Pagination
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                totalPages={data.totalPages}
+              />
+            </div>
+          )}
 
-        <Link href="/notes/action/create" className={css.button}>
-          Create note +
-        </Link>
+          <Link href="/notes/action/create" className={css.button}>
+            Create note +
+          </Link>
+        </div>
       </header>
 
       {isLoading && <Loader />}
       {error && <ErrorMessage />}
       {data && data && data.notes.length > 0 && <NoteList notes={data.notes} />}
+      {isSuccess && data && data.notes.length === 0 && (
+        <div className={css.emptyState}>
+          <h2 className={css.emptyTitle}>No notes yet</h2>
+          <p className={css.emptyText}>
+            Try a different search or create your first note to get started.
+          </p>
+          <Link href="/notes/action/create" className={css.button}>
+            Create note +
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

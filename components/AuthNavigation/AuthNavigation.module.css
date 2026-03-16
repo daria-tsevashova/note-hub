@@ -1,13 +1,13 @@
 .userEmail {
-  color: #6b7280;
+  color: var(--text-secondary);
   margin: 0 0.5rem 0 0;
   font-size: 0.875rem;
 }
 
 .logoutButton {
   background: transparent;
-  border: 1px solid #d1d5db;
-  color: #374151;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
   padding: 0.35rem 0.75rem;
   border-radius: 6px;
   cursor: pointer;
@@ -20,9 +20,9 @@
 }
 
 .logoutButton:hover {
-  background-color: #fee2e2;
-  border-color: #fca5a5;
-  color: #dc2626;
+  background-color: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: var(--danger-hover);
 }
 
 .navigationItem {
@@ -32,7 +32,7 @@
 
 .navigationLink {
   text-decoration: none;
-  color: #374151;
+  color: var(--text-secondary);
   font-size: 0.95rem;
   font-weight: 500;
   padding: 0.4rem 0.75rem;
@@ -43,12 +43,12 @@
 }
 
 .navigationLink:hover {
-  background-color: #f3f4f6;
-  color: #111827;
+  background-color: var(--surface-soft);
+  color: var(--text-primary);
 }
 
 .signUpLink {
-  background-color: #2563eb;
+  background-color: var(--accent);
   color: #ffffff !important;
   padding: 0.4rem 0.9rem;
   border-radius: 6px;
@@ -59,6 +59,6 @@
 }
 
 .signUpLink:hover {
-  background-color: #1d4ed8;
+  background-color: var(--accent-hover);
   color: #ffffff !important;
 }

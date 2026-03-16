@@ -1,16 +1,23 @@
-import { tags } from "@/types/note";
 import type { Metadata } from "next";
 import css from "./CreateNote.module.css";
 import NoteForm from "@/components/NoteForm/NoteForm";
 
 const CreateNote = async () => {
-  const categories = tags; // ["Todo","Work",...]
-
   return (
     <main className={css.main}>
       <div className={css.container}>
-        <h1 className={css.title}>Create note</h1>
-        <NoteForm />
+        <div className={css.hero}>
+          <p className={css.eyebrow}>New note</p>
+          <h1 className={css.title}>Create Your Next Note</h1>
+          <p className={css.subtitle}>
+            Capture an idea quickly and organize it instantly with the right
+            title, content and tag.
+          </p>
+        </div>
+
+        <div className={css.formCard}>
+          <NoteForm />
+        </div>
       </div>
     </main>
   );

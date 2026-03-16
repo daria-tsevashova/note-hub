@@ -1,4 +1,5 @@
 import AuthNavigation from "../AuthNavigation/AuthNavigation";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import css from "./Header.module.css";
 import Link from "next/link";
 
@@ -11,6 +12,8 @@ export default function Header() {
       </Link>
       <nav aria-label="Main Navigation">
         <ul className={css.navigation}>
+          <ThemeToggle />
+
           <li>
             <Link href="/">Home</Link>
           </li>

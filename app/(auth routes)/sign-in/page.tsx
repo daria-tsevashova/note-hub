@@ -5,8 +5,10 @@ import { useRouter } from "next/navigation";
 import css from "./SignInPage.module.css";
 import { login, LoginRequest } from "@/lib/api/clientApi";
 import useAuthStore, { AuthState } from "@/lib/store/authStore";
+import Link from "next/link";
+import { getAuthErrorMessage } from "@/lib/api/authErrorMessage";
 
-export default function SignInPage(){
+export default function SignInPage() {
   const router = useRouter();
   const setUser = useAuthStore((s: AuthState) => s.setUser);
   const [error, setError] = useState("");
@@ -25,8 +27,7 @@ export default function SignInPage(){
       setUser(user);
       router.push("/profile");
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : String(err);
-      setError(message || "Authentication failed");
+      setError(getAuthErrorMessage(err, "login"));
     }
   };
 
@@ -36,27 +37,53 @@ export default function SignInPage(){
 
   return (
     <main className={css.mainContent}>
-      <form className={css.form} onSubmit={handleSubmit}>
-        <h1 className={css.formTitle}>Sign in</h1>
+      <div className={css.formCard}>
+        <p className={css.eyebrow}>Welcome back</p>
+        <h1 className={css.formTitle}>Sign in to NoteHub</h1>
+        <p className={css.formSubtitle}>
+          Continue where you left off and keep your notes organized in one calm
+          workspace.
+        </p>
 
-        <div className={css.formGroup}>
-          <label htmlFor="email">Email</label>
-          <input id="email" type="email" name="email" className={css.input} required />
-        </div>
+        <form className={css.form} onSubmit={handleSubmit}>
+          <div className={css.formGroup}>
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              className={css.input}
+              required
+            />
+          </div>
 
-        <div className={css.formGroup}>
-          <label htmlFor="password">Password</label>
-          <input id="password" type="password" name="password" className={css.input} required />
-        </div>
+          <div className={css.formGroup}>
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              className={css.input}
+              required
+            />
+          </div>
 
-        <div className={css.actions}>
-          <button type="submit" className={css.submitButton}>
-            Log in
-          </button>
-        </div>
+          <div className={css.actions}>
+            <button type="submit" className={css.submitButton}>
+              Log in
+            </button>
+          </div>
 
-        <p className={css.error}>{error}</p>
-      </form>
+          <p className={css.error}>{error}</p>
+        </form>
+
+        <p className={css.switchText}>
+          New to NoteHub?
+          <Link href="/sign-up" className={css.switchLink}>
+            Create account
+          </Link>
+        </p>
+      </div>
     </main>
   );
 }

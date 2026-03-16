@@ -13,12 +13,14 @@ export default function EditProfilePage() {
   const setUser = useAuthStore((state) => state.setUser);
 
   const [username, setUsername] = useState("");
+  const [avatar, setAvatar] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
     if (user) {
       setUsername(user.username || "");
+      setAvatar(user.avatar || "");
     }
   }, [user]);
 
@@ -28,7 +30,11 @@ export default function EditProfilePage() {
 
     try {
       const username = formData.get("username") as string;
-      const updatedUser = await updateUserProfile({ username });
+      const avatar = formData.get("avatar") as string;
+      const updatedUser = await updateUserProfile({
+        username,
+        avatar: avatar.trim() || undefined,
+      });
       setUser(updatedUser);
       router.push("/profile");
     } catch (err) {
@@ -46,15 +52,34 @@ export default function EditProfilePage() {
   return (
     <main className={css.mainContent}>
       <div className={css.profileCard}>
-        <h1 className={css.formTitle}>Edit Profile</h1>
+        <div className={css.header}>
+          <div>
+            <p className={css.eyebrow}>Profile settings</p>
+            <h1 className={css.formTitle}>Edit Profile</h1>
+          </div>
+        </div>
 
-        <Image
-          src={user?.avatar || "https://ac.goit.global/avatar-placeholder.png"}
-          alt="User Avatar"
-          width={120}
-          height={120}
-          className={css.avatar}
-        />
+        <div className={css.previewSection}>
+          <div className={css.avatarRing}>
+            <Image
+              src={
+                avatar ||
+                user?.avatar ||
+                "https://ac.goit.global/avatar-placeholder.png"
+              }
+              alt="User Avatar"
+              width={128}
+              height={128}
+              className={css.avatar}
+            />
+          </div>
+          <div className={css.previewCopy}>
+            <p className={css.previewLabel}>Avatar preview</p>
+            <p className={css.previewText}>
+              Paste a direct image URL to refresh how your profile appears.
+            </p>
+          </div>
+        </div>
 
         <form className={css.profileInfo} action={handleSubmit}>
           <div className={css.usernameWrapper}>
@@ -70,9 +95,29 @@ export default function EditProfilePage() {
             />
           </div>
 
-          <p>Email: {user?.email ?? "user_email@example.com"}</p>
+          <div className={css.usernameWrapper}>
+            <label htmlFor="avatar">Avatar URL:</label>
+            <input
+              id="avatar"
+              name="avatar"
+              type="url"
+              className={css.input}
+              value={avatar}
+              onChange={(e) => setAvatar(e.target.value)}
+              placeholder="https://example.com/avatar.jpg"
+            />
+            <span className={css.helperText}>
+              Leave empty to keep your current avatar or fall back to the
+              default image.
+            </span>
+          </div>
 
-          {error && <p style={{ color: "red" }}>{error}</p>}
+          <div className={css.staticField}>
+            <span className={css.staticLabel}>Email</span>
+            <p>{user?.email ?? "user_email@example.com"}</p>
+          </div>
+
+          {error && <p className={css.errorMessage}>{error}</p>}
 
           <div className={css.actions}>
             <button type="submit" className={css.saveButton} disabled={loading}>

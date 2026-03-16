@@ -30,15 +30,17 @@ const NoteList = ({ notes }: NoteListProps) => {
           <p className={css.content}>{note.content}</p>
           <div className={css.footer}>
             <span className={css.tag}>{note.tag}</span>
-            <Link href={`/notes/${note.id}`} className={css.link}>
-              View details
-            </Link>
-            <button
-              className={css.button}
-              onClick={() => handleClick(note.id!)}
-            >
-              Delete
-            </button>
+            <div className={css.actions}>
+              <Link href={`/notes/${note.id}`} className={css.link}>
+                View details
+              </Link>
+              <button
+                className={css.button}
+                onClick={() => handleClick(note.id!)}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </li>
       ))}
