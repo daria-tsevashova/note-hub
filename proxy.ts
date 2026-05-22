@@ -33,10 +33,20 @@ export async function proxy(request: NextRequest) {
         const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
         for (const cookieStr of cookieArray) {
           const parsed = parse(cookieStr);
+          const sameSiteValue =
+            parsed.SameSite?.toLowerCase() === "strict" ||
+            parsed.SameSite?.toLowerCase() === "lax" ||
+            parsed.SameSite?.toLowerCase() === "none"
+              ? (parsed.SameSite.toLowerCase() as "strict" | "lax" | "none")
+              : undefined;
+
           const options = {
             expires: parsed.Expires ? new Date(parsed.Expires) : undefined,
-            path: parsed.Path,
+            path: parsed.Path || "/",
             maxAge: Number(parsed["Max-Age"]),
+            httpOnly: parsed.HttpOnly !== undefined,
+            secure: parsed.Secure !== undefined,
+            sameSite: sameSiteValue,
           };
           if (parsed.sessionId)
             cookieStore.set("sessionId", parsed.sessionId, options);
@@ -46,11 +56,10 @@ export async function proxy(request: NextRequest) {
             cookieStore.set("refreshToken", parsed.refreshToken, options);
         }
 
-        return NextResponse.next({
-          headers: {
-            Cookie: cookieStore.toString(),
-          },
-        });
+        const headers = new Headers(request.headers);
+        headers.set("cookie", cookieStore.toString());
+
+        return NextResponse.next({ request: { headers } });
       }
     }
 
