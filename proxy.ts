@@ -59,7 +59,14 @@ export async function proxy(request: NextRequest) {
         const headers = new Headers(request.headers);
         headers.set("cookie", cookieStore.toString());
 
-        return NextResponse.next({ request: { headers } });
+        const response = NextResponse.next({ request: { headers } });
+
+        // Обов'язково прокидаємо нові куки назад у браузер
+        cookieArray.forEach((cookieStr) => {
+          response.headers.append("Set-Cookie", cookieStr);
+        });
+
+        return response;
       }
     }
 
