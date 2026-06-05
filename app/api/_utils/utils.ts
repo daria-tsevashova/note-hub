@@ -35,11 +35,32 @@ export function applySetCookieHeaders(
 ) {
   const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
   for (const cookieStr of cookieArray) {
-    const parsed = parse(cookieStr);
-    const options = getCookieOptions(parsed);
+    // Parse cookie name/value and attributes manually because `cookie.parse`
+    // only extracts the name=value and ignores attributes like HttpOnly/Secure.
+    const parts = cookieStr.split(';').map((p) => p.trim());
+    const [nameValue, ...attrParts] = parts;
+    const eqIndex = nameValue.indexOf('=');
+    const name = eqIndex >= 0 ? nameValue.slice(0, eqIndex) : nameValue;
+    const value = eqIndex >= 0 ? nameValue.slice(eqIndex + 1) : '';
 
-    if (parsed.sessionId) cookieStore.set("sessionId", parsed.sessionId, options);
-    if (parsed.accessToken) cookieStore.set("accessToken", parsed.accessToken, options);
-    if (parsed.refreshToken) cookieStore.set("refreshToken", parsed.refreshToken, options);
+    const parsed: Record<string, string | boolean | undefined> = {};
+    parsed[name] = decodeURIComponent(value);
+
+    for (const attr of attrParts) {
+      const [k, ...rest] = attr.split('=');
+      const key = k.trim();
+      if (rest.length === 0) {
+        // Flag attributes like HttpOnly or Secure
+        parsed[key] = true;
+      } else {
+        parsed[key] = rest.join('=').trim();
+      }
+    }
+
+    const options = getCookieOptions(parsed as Record<string, string | undefined>);
+
+    if ((parsed as any).sessionId) cookieStore.set('sessionId', (parsed as any).sessionId, options);
+    if ((parsed as any).accessToken) cookieStore.set('accessToken', (parsed as any).accessToken, options);
+    if ((parsed as any).refreshToken) cookieStore.set('refreshToken', (parsed as any).refreshToken, options);
   }
 }
