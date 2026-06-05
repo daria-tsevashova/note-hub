@@ -26,8 +26,8 @@ export async function proxy(request: NextRequest) {
         .getAll()
         .map((c) => `${c.name}=${c.value}`)
         .join("; ");
-      const data = await checkSession({ cookies: cookieString });
-      const setCookie = data.headers["set-cookie"];
+      const data = (await checkSession({ cookies: cookieString })) as any;
+      const setCookie = data?.headers?.["set-cookie"];
 
       if (setCookie) {
         const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
