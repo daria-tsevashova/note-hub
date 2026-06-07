@@ -29,10 +29,9 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         if (!mounted) return;
 
         if (user) {
-          // Якщо на публічному маршруті - НЕ встановлюємо user
+          // Якщо користувач уже залогінений і намагається відкрити логін/реєстрацію — редірект на нотатки
           if (pathname && isPublicRoute(pathname)) {
-            clearIsAuthenticated();
-            setChecking(false);
+            router.replace("/notes");
             return;
           }
 

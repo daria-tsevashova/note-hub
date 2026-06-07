@@ -28,8 +28,5 @@ export const api = axios.create({
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
-    ...(process.env.NEXT_PUBLIC_NOTEHUB_TOKEN && {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-    }),
   },
 });
